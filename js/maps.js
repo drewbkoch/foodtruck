@@ -1,3 +1,28 @@
+/* ======================= FOOD TRUCK DATA =================*/
+
+var tacosElTajinData = ["Tacos El Tajin", "11am - 2pm", "Mexican", "Cash or Cards", "Tacos and Burritos"];
+var cheeseWizardsData = ["Cheese Wizards", "11am - 2pm", "Cash, Cards & Level Up", "Grilled Cheese Magic", "http://www.facebook.com/CheeseWizards", "https://twitter.com/CheeseWizards", "http://wizardsofcheese.com/"]
+var thaiUUpData = ["Thai-U-Up", "11am - 2pm", "Thai", "Cash Only", "Thai Food", "", "https://twitter.com/thaiuup", "http://thaiuup.com/"]
+
+/* ======================= END FOOD TRUCK DATA =================*/
+
+/* ======================= DETERMINE DAY OF WEEK =================*/
+
+var mondayTrucks = [tacosElTajinData[0], cheeseWizardsData[0], thaiUUpData[0]];
+
+ /* ======================= DETERMINE DAY OF WEEK =================*/
+  var d=new Date();
+  var weekday=new Array(7);
+  weekday[0]="Sunday";
+  weekday[1]="Monday";
+  weekday[2]="Tuesday";
+  weekday[3]="Wednesday";
+  weekday[4]="Thursday";
+  weekday[5]="Friday";
+  weekday[6]="Saturday";
+
+  var today = weekday[d.getDay()];
+
 function initialize() {
   var mapOptions = {
     center: new google.maps.LatLng(47.621104, -122.337170),
@@ -15,11 +40,11 @@ function initialize() {
           position: tet,
           map: map,
           animation: google.maps.Animation.DROP,
-          title:"Tacos El Tajin"
+          title: tacosElTajinData[0]
       });
 
       //create info window content
-      var tetcontentString = '<p>Tacos El Tajin</p>';
+      var tetcontentString = '<h1>' + tacosElTajinData[0] + '</h1>' + '<h2>' + tacosElTajinData[1] + '</h2>' + '<ul>' + '<li>' + tacosElTajinData[2] + '</li>' + '<li>' + tacosElTajinData[3] + '</li>' + '<li>' + tacosElTajinData[4] + '</li>' + '</ul>';
 
       //put content into info window
       var tetinfowindow = new google.maps.InfoWindow({
@@ -411,7 +436,7 @@ function initialize() {
   /* ======================= BUTTON FUNCTIONS =================*/
 
   //monday button clicked
-  var monday = function (){
+  function monday (){
     tacosElTajin();
     cheeseWizards();
     thaiUUp();
@@ -465,18 +490,6 @@ function initialize() {
     iLoveMyGff();
   };
 
-  /* ======================= DETERMINE DAY OF WEEK =================*/
-  var d=new Date();
-  var weekday=new Array(7);
-  weekday[0]="Sunday";
-  weekday[1]="Monday";
-  weekday[2]="Tuesday";
-  weekday[3]="Wednesday";
-  weekday[4]="Thursday";
-  weekday[5]="Friday";
-  weekday[6]="Saturday";
-
-  var today = weekday[d.getDay()];
 
   if (today === "Sunday") {
     monday();
@@ -513,7 +526,12 @@ function initialize() {
 
   /* ======================= NUMBER OF TRUCKS TODAY =================*/
 
-  $('#number-trucks').text("There are 5 trucks" + " in your area today!");
+  $('#number-trucks').text("There are " + mondayTrucks.length + " trucks" + " in your area today!");
+
+  /* ======================= LIST OF TRUCKS TODAY =================*/
+  for (i=0; i<mondayTrucks.length; i++) {
+    $('#trucks-list').append('<li>' + mondayTrucks[i] + '</li>');
+  }
 
   /* ======================= SHOW CURRENT LOCATION =================*/
   var blueDot = 'img/blue-dot.png'
@@ -529,7 +547,7 @@ function initialize() {
       var me = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
       myloc.setPosition(me);
   }, function(error) {
-      console.log("error");
+      console.log("geolocation error");
   });
 
 };
