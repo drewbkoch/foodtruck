@@ -1,14 +1,46 @@
 /* ======================= FOOD TRUCK DATA =================*/
 
-var tacosElTajinData = ["Tacos El Tajin", "11am - 2pm", "Mexican", "Cash or Cards", "Tacos and Burritos"];
-var cheeseWizardsData = ["Cheese Wizards", "11am - 2pm", "Cash, Cards & Level Up", "Grilled Cheese Magic", "http://www.facebook.com/CheeseWizards", "https://twitter.com/CheeseWizards", "http://wizardsofcheese.com/"]
-var thaiUUpData = ["Thai-U-Up", "11am - 2pm", "Thai", "Cash Only", "Thai Food", "", "https://twitter.com/thaiuup", "http://thaiuup.com/"]
 
+  var tacosElTajinData = {
+    name: "Tacos El Tajin",
+    time: "11am - 2pm",
+    category: "Mexican",
+    payment: "Cash or Cards",
+    description: "Tacos and Burritos",
+    day: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+  };
+
+
+  var cheeseWizardsData = {
+    name: "Cheese Wizards",
+    time: "11am - 2pm",
+    category: "Sandwiches",
+    payment: "Cash, Cards & Level Up",
+    description: "Grilled Cheese Magic",
+    facebook: "http://www.facebook.com/CheeseWizards",
+    twitter: "https://twitter.com/CheeseWizards",
+    website: "http://wizardsofcheese.com/",
+    day: ["Tuesday", "Wednesday", "Thursday", "Friday"]
+  };
+
+  var thaiUUpData = {
+    name: "Thai-U-Up",
+    time: "11am - 2pm",
+    category: "Thai",
+    payment: "Cash Only",
+    description: "Thai Food",
+    twitter: "https://twitter.com/thaiuup",
+    website: "http://thaiuup.com/",
+    day: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+  };
+
+var allTrucks = [tacosElTajinData, cheeseWizardsData, thaiUUpData];
 /* ======================= END FOOD TRUCK DATA =================*/
+
 
 /* ======================= DETERMINE DAY OF WEEK =================*/
 
-var mondayTrucks = [tacosElTajinData[0], cheeseWizardsData[0], thaiUUpData[0]];
+var mondayTrucks = [tacosElTajinData.name, cheeseWizardsData.name, thaiUUpData.name];
 
  /* ======================= DETERMINE DAY OF WEEK =================*/
   var d=new Date();
@@ -23,7 +55,20 @@ var mondayTrucks = [tacosElTajinData[0], cheeseWizardsData[0], thaiUUpData[0]];
 
   var today = weekday[d.getDay()];
 
+
+
+
+
 function initialize() {
+
+  for (i=0; i<allTrucks.length; i++) {
+    //do something if today exists in day value for object
+    if (allTrucks[i].day.indexOf(today) > -1) {
+      $('#trucks-list').append('<li>' + allTrucks[i].name + '</li>');
+    }
+  }
+
+
   var mapOptions = {
     center: new google.maps.LatLng(47.621104, -122.337170),
     zoom: 16
@@ -529,9 +574,7 @@ function initialize() {
   $('#number-trucks').text("There are " + mondayTrucks.length + " trucks" + " in your area today!");
 
   /* ======================= LIST OF TRUCKS TODAY =================*/
-  for (i=0; i<mondayTrucks.length; i++) {
-    $('#trucks-list').append('<li>' + mondayTrucks[i] + '</li>');
-  }
+
 
   /* ======================= SHOW CURRENT LOCATION =================*/
   var blueDot = 'img/blue-dot.png'
