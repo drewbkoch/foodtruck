@@ -1,17 +1,20 @@
-/* ======================= FOOD TRUCK DATA =================*/
+/* ======================= FOOD TRUCK  =================*/
 
+var foodTrucks =[
 
-  var tacosElTajinData = {
+  tacosElTajin = {
     name: "Tacos El Tajin",
     time: "11am - 2pm",
     category: "Mexican",
     payment: "Cash or Cards",
     description: "Tacos and Burritos",
-    day: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-  };
+    day: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    latitude: 47.623406,
+    longitude: -122.335743
+  },
 
 
-  var cheeseWizardsData = {
+  cheeseWizards = {
     name: "Cheese Wizards",
     time: "11am - 2pm",
     category: "Sandwiches",
@@ -21,9 +24,9 @@
     twitter: "https://twitter.com/CheeseWizards",
     website: "http://wizardsofcheese.com/",
     day: ["Tuesday", "Wednesday", "Thursday", "Friday"]
-  };
+  },
 
-  var thaiUUpData = {
+  thaiUUp = {
     name: "Thai-U-Up",
     time: "11am - 2pm",
     category: "Thai",
@@ -32,17 +35,20 @@
     twitter: "https://twitter.com/thaiuup",
     website: "http://thaiuup.com/",
     day: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-  };
+  }
 
-var allTrucks = [tacosElTajinData, cheeseWizardsData, thaiUUpData];
-/* ======================= END FOOD TRUCK DATA =================*/
+];
 
 
-/* ======================= DETERMINE DAY OF WEEK =================*/
+/* ======================= END FOOD TRUCK  =================*/
 
-var mondayTrucks = [tacosElTajinData.name, cheeseWizardsData.name, thaiUUpData.name];
 
- /* ======================= DETERMINE DAY OF WEEK =================*/
+
+
+
+function initialize() {
+
+   /* ======================= DETERMINE DAY OF WEEK =================*/
   var d=new Date();
   var weekday=new Array(7);
   weekday[0]="Sunday";
@@ -56,17 +62,17 @@ var mondayTrucks = [tacosElTajinData.name, cheeseWizardsData.name, thaiUUpData.n
   var today = weekday[d.getDay()];
 
 
-
-
-
-function initialize() {
-
-  for (i=0; i<allTrucks.length; i++) {
+  //Find the trucks that are around today
+  for (i=0; i<foodTrucks.length; i++) {
     //do something if today exists in day value for object
-    if (allTrucks[i].day.indexOf(today) > -1) {
-      $('#trucks-list').append('<li>' + allTrucks[i].name + '</li>');
+    if (foodTrucks[i].day.indexOf(today) > -1) {
+      $('#trucks-list').append('<li>' + foodTrucks[i].name + '</li>');
     }
   }
+
+  /* ======================= NUMBER OF TRUCKS TODAY =================*/
+  //need to fix, just counting number of food trucks, not number today
+  $('#number-trucks').text("There are " + foodTrucks.length + " trucks" + " in your area today!");
 
 
   var mapOptions = {
@@ -77,19 +83,17 @@ function initialize() {
       mapOptions);
 
   var tacosElTajin = function() {
-      //assign coordinates
-      var tet = new google.maps.LatLng(47.623406, -122.335743);
 
       //create marker on map
       var tetMarker = new google.maps.Marker({
-          position: tet,
+          position: new google.maps.LatLng(foodTrucks[0].latitude, foodTrucks[0].longitude),
           map: map,
           animation: google.maps.Animation.DROP,
-          title: tacosElTajinData[0]
+          title: foodTrucks[0].title
       });
 
       //create info window content
-      var tetcontentString = '<h1>' + tacosElTajinData[0] + '</h1>' + '<h2>' + tacosElTajinData[1] + '</h2>' + '<ul>' + '<li>' + tacosElTajinData[2] + '</li>' + '<li>' + tacosElTajinData[3] + '</li>' + '<li>' + tacosElTajinData[4] + '</li>' + '</ul>';
+      var tetcontentString = '<h1>' + tacosElTajin[0] + '</h1>' + '<h2>' + tacosElTajin[1] + '</h2>' + '<ul>' + '<li>' + tacosElTajin[2] + '</li>' + '<li>' + tacosElTajin[3] + '</li>' + '<li>' + tacosElTajin[4] + '</li>' + '</ul>';
 
       //put content into info window
       var tetinfowindow = new google.maps.InfoWindow({
@@ -568,12 +572,6 @@ function initialize() {
 
   /* ======================= DAY OF WEEK GREETING =================*/
   $('#day-greeting').text("Happy" + " " + today + "!");
-
-  /* ======================= NUMBER OF TRUCKS TODAY =================*/
-
-  $('#number-trucks').text("There are " + mondayTrucks.length + " trucks" + " in your area today!");
-
-  /* ======================= LIST OF TRUCKS TODAY =================*/
 
 
   /* ======================= SHOW CURRENT LOCATION =================*/
